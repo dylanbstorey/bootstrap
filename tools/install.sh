@@ -319,7 +319,7 @@ setup_dircolors(){
 
 setup_brew(){
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-    /opt/homebrew/bin/brew install coreutils wget
+    brew install coreutils wget
 }
 
 setup_zshrc() {
