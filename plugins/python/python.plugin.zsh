@@ -85,12 +85,13 @@ function mkv() {
 
   python3 -m venv "${name}" "${venvpath}" || return
   echo >&2 "Created venv at '${venvpath}'"
-  vact "${name}"
+  acv "${name}"
 }
 
 
 # Remove a virtual environment 
 function rmv(){
+  mkdir -p ${HOME}/.venvs 
   local name="${1:-$r_str}"
   local venvpath="${HOME}/.venvs/${name}"
   rm -rf ${venvpath} || return
@@ -99,8 +100,10 @@ function rmv(){
 
 # Print a list of available environments to activate
 function lsv(){
+  mkdir -p ${HOME}/.venvs 
   echo "Available environments: "
-  ls -l ~/.venvs| grep -v total | tr -s ' ' | cut -d ' ' -f 9 | sed -e 's/^/  /'
+  local venvpath="${HOME}/.venvs/"
+  ls -l ${venvpath} | grep -v total | tr -s ' ' | cut -d ' ' -f 9 | sed -e 's/^/  /'
 }
 
 # Autocompletes actv and rmv to all venvs in the ~/.venvs location
