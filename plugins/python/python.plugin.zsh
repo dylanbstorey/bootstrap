@@ -113,5 +113,5 @@ _actv_autocomp(){
   COMPREPLY=( $(compgen -W "${availabl_venvs}" -- $cur) )
   }
 
-complete -F _actv_autocomp actv
+complete -F _actv_autocomp acv
 complete -F _actv_autocomp rmv
