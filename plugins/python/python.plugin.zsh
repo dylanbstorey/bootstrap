@@ -83,7 +83,7 @@ function mkv() {
   local name="${1:-$r_str}"
   local venvpath="${HOME}/.venvs/${name}"
 
-  python3 -m venv "${name}" "${venvpath}" || return
+  python3 -m venv "${venvpath}" || return
   echo >&2 "Created venv at '${venvpath}'"
   acv "${name}"
 }
