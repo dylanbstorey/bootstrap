@@ -88,14 +88,14 @@ fi
 
 # uv shell completion (fast Python package manager)
 if command -v uv &>/dev/null; then
-    eval "$(uv generate-shell-completion zsh)"
-    eval "$(uvx --generate-shell-completion zsh)"
+    eval "$(uv generate-shell-completion zsh)" 2>/dev/null
+    eval "$(uvx --generate-shell-completion zsh)" 2>/dev/null
 fi
 
 # Rust/Cargo completions
 if command -v rustup &>/dev/null; then
-    eval "$(rustup completions zsh)"
-    eval "$(rustup completions zsh cargo)"
+    eval "$(rustup completions zsh)" 2>/dev/null
+    eval "$(rustup completions zsh cargo)" 2>/dev/null
 fi
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
