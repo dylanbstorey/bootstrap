@@ -11,6 +11,9 @@
 #
 set -e
 
+# Options
+YES=false
+
 # Colors
 if [ -t 1 ]; then
   FMT_RED=$(printf '\033[31m')
@@ -80,8 +83,12 @@ install_fresh() {
 
   if [ -d "$HOME/.oh-my-zsh" ]; then
     warn "Existing ~/.oh-my-zsh found."
-    printf "Backup and replace? [y/N] "
-    read -r reply
+    if [ "$YES" = "true" ]; then
+      reply="y"
+    else
+      printf "Backup and replace? [y/N] "
+      read -r reply
+    fi
     if [ "$reply" = "y" ] || [ "$reply" = "Y" ]; then
       local backup="$HOME/.oh-my-zsh.backup.$(date +%Y%m%d%H%M%S)"
       info "Backing up to $backup"
@@ -109,6 +116,8 @@ install_macports() {
 
   if [ -f /opt/local/bin/port ]; then
     success "MacPorts already installed."
+    info "Updating MacPorts..."
+    sudo port selfupdate
     return 0
   fi
 
@@ -423,6 +432,7 @@ print_usage() {
   echo "Usage: $0 [OPTIONS]"
   echo ""
   echo "Options:"
+  echo "  -y, --yes   Skip confirmation prompts"
   echo "  --fresh     Fresh install (backup existing, setup zsh + all packages)"
   echo "  --all       Install everything (packages only, no zsh setup)"
   echo "  --port      Install/check MacPorts (macOS only)"
@@ -452,6 +462,9 @@ main() {
 
   for arg in "$@"; do
     case "$arg" in
+      -y|--yes)
+        YES=true
+        ;;
       --fresh)
         install_fresh
         install_macports || true
