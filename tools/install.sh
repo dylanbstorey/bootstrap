@@ -1,14 +1,12 @@
 #!/bin/sh
 #
 # This script should be run via curl:
-#   sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+#   sh -c "$(curl -fsSL https://gitlab.com/dylanbstorey/zsh_setup/-/raw/master/tools/install.sh)"
 # or via wget:
-#   sh -c "$(wget -qO- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-# or via fetch:
-#   sh -c "$(fetch -o - https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+#   sh -c "$(wget -qO- https://gitlab.com/dylanbstorey/zsh_setup/-/raw/master/tools/install.sh)"
 #
 # As an alternative, you can first download the install script and run it afterwards:
-#   wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
+#   wget https://gitlab.com/dylanbstorey/zsh_setup/-/raw/master/tools/install.sh
 #   sh install.sh
 #
 # You can tweak the install behavior by setting variables when running the script. For
@@ -91,6 +89,30 @@ user_can_sudo() {
   #
   ! LANG= sudo -n -v 2>&1 | grep -q "may not run sudo"
 }
+
+# Acquire sudo upfront and keep it alive
+acquire_sudo() {
+  if ! user_can_sudo; then
+    return 0
+  fi
+  echo "Acquiring sudo privileges..."
+  sudo -v
+  # Keep sudo alive in background
+  while true; do
+    sudo -n true
+    sleep 50
+    kill -0 "$$" 2>/dev/null || exit
+  done &
+  SUDO_KEEPALIVE_PID=$!
+}
+
+cleanup_sudo() {
+  if [ -n "$SUDO_KEEPALIVE_PID" ]; then
+    kill "$SUDO_KEEPALIVE_PID" 2>/dev/null || true
+  fi
+}
+
+trap cleanup_sudo EXIT
 
 # The [ -t 1 ] check only works when the function is not called from
 # a subshell (like in `$(...)` or `(...)`, so this hack redefines the
@@ -512,6 +534,9 @@ main() {
   done
 
   setup_color
+
+  # Acquire sudo upfront and keep alive
+  acquire_sudo
 
   if ! command_exists zsh; then
     echo "${FMT_YELLOW}Zsh is not installed.${FMT_RESET} Please install zsh first."
