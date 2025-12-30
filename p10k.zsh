@@ -54,6 +54,8 @@ WHITE=255
     vcs                     # git status
     # =========================[ Line #2 ]=========================
     newline                 # \n
+    battery                 # internal battery
+    wifi                    # wifi speed
     prompt_char             # prompt symbol
   )
 
@@ -70,22 +72,7 @@ WHITE=255
     rust_version          # rustc version (https://www.rust-lang.org)
     kubecontext             # current kubernetes context (https://kubernetes.io/)
     context                 # user@hostname
-    # nordvpn                 # nordvpn connection status, linux only (https://nordvpn.com/)
-    # load                  # CPU load
-    # disk_usage            # disk usage
-    # ram                   # free RAM
-    # swap                  # used swap
-    # todo                    # todo items (https://github.com/todotxt/todo.txt-cli)
-    # timewarrior             # timewarrior tracking status (https://timewarrior.net/)
     time                    # current time
-    # =========================[ Line #2 ]=========================
-    newline
-    # ip                    # ip address and bandwidth usage for a specified network interface
-    # public_ip             # public IP address
-    # proxy                 # system-wide http/https/ftp proxy
-    battery               # internal battery
-    wifi                  # wifi speed
-    # example               # example user-defined segment (see prompt_example function below)
   )
 
   # Defines character set used by powerlevel10k. It's best to let `p10k configure` set it for you.
