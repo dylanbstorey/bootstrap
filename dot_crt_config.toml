@@ -1,0 +1,27 @@
+# CRT Terminal Configuration
+# https://github.com/colliery-io/crt
+
+[theme]
+# Available: alien, dracula, matrix, minimal, nyancat, particles, rain,
+#            robco, shape, solarized, starfield, stress, synthwave, tron,
+#            vaporwave, wh40k
+# Custom themes: place CSS files in ~/.config/crt/themes/
+name = "synthwave"
+
+[font]
+# CRT bundles MesloLGS NF (Nerd Font) at ~/.config/crt/fonts/
+# family = "MesloLGS NF"
+# size = 14
+
+[window]
+# opacity = 1.0
+# decorations = true
+
+[shell]
+# Uncomment to use a specific shell
+# program = "/bin/zsh"
+# args = ["-l"]
+
+[cursor]
+# shape = "block"  # block, underline, beam
+# blinking = false

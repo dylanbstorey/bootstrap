@@ -67,12 +67,8 @@ WHITE=255
     command_execution_time  # duration of the last command
     background_jobs         # presence of background jobs
     virtualenv              # python virtual environment (https://docs.python.org/3/library/venv.html)
-    go_version            # go version (https://golang.org)
     rust_version          # rustc version (https://www.rust-lang.org)
     kubecontext             # current kubernetes context (https://kubernetes.io/)
-    aws                     # aws profile (https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html)
-    azure                   # azure account name (https://docs.microsoft.com/en-us/cli/azure)
-    gcloud                  # google cloud cli account and project (https://cloud.google.com/)
     context                 # user@hostname
     # nordvpn                 # nordvpn connection status, linux only (https://nordvpn.com/)
     # load                  # CPU load
@@ -81,7 +77,6 @@ WHITE=255
     # swap                  # used swap
     # todo                    # todo items (https://github.com/todotxt/todo.txt-cli)
     # timewarrior             # timewarrior tracking status (https://timewarrior.net/)
-    taskwarrior             # taskwarrior task count (https://taskwarrior.org/)
     time                    # current time
     # =========================[ Line #2 ]=========================
     newline
@@ -206,31 +201,23 @@ WHITE=255
   typeset -g POWERLEVEL9K_DIR_ANCHOR_BOLD=true
   # Don't shorten directories that contain any of these files. They are anchors.
   local anchor_files=(
-    .bzr
-    .citc
     .git
-    .hg
-    .astro
-    .astrocloud
+    .claude
+    CLAUDE.md
     .angreal
-    .node-version
+    .metis
     .python-version
-    .go-version
-    .ruby-version
-    .lua-version
-    .java-version
-    .perl-version
-    .php-version
-    .tool-version
-    .shorten_folder_marker
-    .svn
-    .terraform
-    CVS
+    pyproject.toml
+    uv.lock
     Cargo.toml
-    composer.json
-    go.mod
+    Dockerfile
+    docker-compose.yml
+    docker-compose.yaml
+    compose.yml
+    compose.yaml
     package.json
-    stack.yaml
+    Makefile
+    .shorten_folder_marker
   )
   typeset -g POWERLEVEL9K_SHORTEN_FOLDER_MARKER="(${(j:|:)anchor_files})"
   # If set to "first" ("last"), remove everything before the first (last) subdirectory that contains

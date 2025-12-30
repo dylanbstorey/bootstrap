@@ -147,7 +147,7 @@ supports_hyperlinks() {
 
   # If $TERM_PROGRAM is set, these terminals support hyperlinks
   case "$TERM_PROGRAM" in
-  Hyper|iTerm.app|terminology|WezTerm) return 0 ;;
+  Hyper|iTerm.app|terminology|WezTerm|CRT) return 0 ;;
   esac
 
   # kitty supports hyperlinks
@@ -303,23 +303,37 @@ setup_p10k(){
     cp ${ZSH}/p10k.zsh ${HOME}/.p10k.zsh
 }
 
-setup_hyper_js(){
-    if [ ! -f ${HOME}/.hyper.js ]
-    then
-        echo "${FMT_YELLOW}Hyper.js not installed, not copying config. (https://hyper.is/#installation) ${FMT_RESET}"
+setup_crt(){
+    local crt_config_dir="${HOME}/.config/crt"
+    if [ -d "${crt_config_dir}" ]; then
+        echo "${FMT_GREEN}CRT terminal detected. Setting up config...${FMT_RESET}"
+        if [ ! -f "${crt_config_dir}/config.toml" ]; then
+            cp ${ZSH}/dot_crt_config.toml ${crt_config_dir}/config.toml
+            echo "${FMT_GREEN}CRT config installed with synthwave theme.${FMT_RESET}"
+        else
+            echo "${FMT_YELLOW}CRT config already exists, not overwriting.${FMT_RESET}"
+        fi
     else
-        cp ${ZSH}/dot_hyper.js ${HOME}/.hyper.js
+        echo "${FMT_YELLOW}CRT terminal not installed. (https://github.com/colliery-io/crt)${FMT_RESET}"
     fi
-    
 }
 
 setup_dircolors(){
     cp ${ZSH}/dircolors ${HOME}/.dircolors
 }
 
-setup_brew(){
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-    brew install coreutils wget
+setup_macports(){
+    if [ -f /opt/local/bin/port ]; then
+        echo "${FMT_GREEN}MacPorts detected.${FMT_RESET}"
+        # Install GNU coreutils for dircolors support
+        if ! command_exists gdircolors; then
+            echo "${FMT_BLUE}Installing coreutils via MacPorts...${FMT_RESET}"
+            sudo port install coreutils
+        fi
+    else
+        echo "${FMT_YELLOW}MacPorts not installed. Install from https://www.macports.org/${FMT_RESET}"
+        echo "${FMT_YELLOW}After installing MacPorts, run: sudo port install coreutils${FMT_RESET}"
+    fi
 }
 
 setup_zshrc() {
@@ -528,14 +542,14 @@ EOF
 
 
   if [[ "$OSTYPE" == "darwin"* ]]; then
-    setup_brew
+    setup_macports
   fi
-  
+
   setup_ohmyzsh
   setup_zshrc
   setup_shell
   setup_p10k
-  setup_hyper_js
+  setup_crt
   setup_dircolors
   print_success
 
