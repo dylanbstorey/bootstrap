@@ -104,11 +104,12 @@ WHITE=255
   # Add an empty line before each prompt.
   typeset -g POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
 
-  # No box-drawing characters - cleaner for copy/paste
-  typeset -g POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX=''
-  typeset -g POWERLEVEL9K_MULTILINE_NEWLINE_PROMPT_PREFIX=''
-  typeset -g POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX=''
-  typeset -g POWERLEVEL9K_MULTILINE_FIRST_PROMPT_SUFFIX=''
+  # Connect left prompt lines with these symbols.
+  typeset -g POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX='%244F╭─'
+  typeset -g POWERLEVEL9K_MULTILINE_NEWLINE_PROMPT_PREFIX='%244F├─'
+  typeset -g POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX='%244F╰─'
+  # Right side: top border only, no bottom (cleaner for copy/paste)
+  typeset -g POWERLEVEL9K_MULTILINE_FIRST_PROMPT_SUFFIX='%244F─╮'
   typeset -g POWERLEVEL9K_MULTILINE_NEWLINE_PROMPT_SUFFIX=''
   typeset -g POWERLEVEL9K_MULTILINE_LAST_PROMPT_SUFFIX=''
 
