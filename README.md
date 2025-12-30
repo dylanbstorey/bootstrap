@@ -16,7 +16,7 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/dylanbstorey/bootstrap/mai
 - Custom plugins: `uv` (Python shims), `claude-code` (CLI aliases)
 
 **Terminal**
-- [CRT](https://github.com/colliery-io/crt) terminal config (synthwave theme)
+- [CRT](https://github.com/colliery-io/crt) terminal (uses CRT defaults)
 
 **Dev Tools** (`tools/install_packages.sh`)
 - CLI utilities via MacPorts/apt (ripgrep, fd, bat, delta, jq, gh, etc.)

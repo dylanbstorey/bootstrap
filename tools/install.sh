@@ -326,15 +326,8 @@ setup_p10k(){
 }
 
 setup_crt(){
-    local crt_config_dir="${HOME}/.config/crt"
-    if [ -d "${crt_config_dir}" ]; then
-        echo "${FMT_GREEN}CRT terminal detected. Setting up config...${FMT_RESET}"
-        if [ ! -f "${crt_config_dir}/config.toml" ]; then
-            cp ${ZSH}/dot_crt_config.toml ${crt_config_dir}/config.toml
-            echo "${FMT_GREEN}CRT config installed with synthwave theme.${FMT_RESET}"
-        else
-            echo "${FMT_YELLOW}CRT config already exists, not overwriting.${FMT_RESET}"
-        fi
+    if [ -d "${HOME}/.config/crt" ] || [ -d "/Applications/crt.app" ]; then
+        echo "${FMT_GREEN}CRT terminal detected.${FMT_RESET}"
     else
         echo "${FMT_YELLOW}CRT terminal not installed. (https://github.com/colliery-io/crt)${FMT_RESET}"
     fi

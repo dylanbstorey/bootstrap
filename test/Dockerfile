@@ -27,8 +27,7 @@ RUN mkdir -p ~/.ssh ~/.cache ~/.config/crt
 # Copy config files directly (mimicking what install.sh does)
 RUN cp ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc && \
     cp ~/.oh-my-zsh/p10k.zsh ~/.p10k.zsh && \
-    cp ~/.oh-my-zsh/dircolors ~/.dircolors && \
-    cp ~/.oh-my-zsh/dot_crt_config.toml ~/.config/crt/config.toml
+    cp ~/.oh-my-zsh/dircolors ~/.dircolors
 
 # Clone powerlevel10k theme
 RUN git clone --depth=1 https://github.com/romkatv/powerlevel10k.git \

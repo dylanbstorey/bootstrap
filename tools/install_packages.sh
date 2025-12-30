@@ -170,15 +170,6 @@ install_crt() {
 
   info "Installing CRT terminal..."
   curl -sSL https://raw.githubusercontent.com/colliery-io/crt/main/scripts/install.sh | sh
-
-  # Copy our config if CRT was installed
-  if [ -d "$HOME/.config/crt" ]; then
-    local script_dir="$(cd "$(dirname "$0")/.." && pwd)"
-    if [ -f "$script_dir/dot_crt_config.toml" ] && [ ! -f "$HOME/.config/crt/config.toml" ]; then
-      cp "$script_dir/dot_crt_config.toml" "$HOME/.config/crt/config.toml"
-      success "CRT config installed with synthwave theme."
-    fi
-  fi
 }
 
 # ============================================================================
