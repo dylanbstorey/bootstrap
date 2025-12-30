@@ -33,6 +33,27 @@ error() { printf '%s%sError: %s%s\n' "$FMT_BOLD" "$FMT_RED" "$1" "$FMT_RESET" >&
 
 command_exists() { command -v "$1" >/dev/null 2>&1; }
 
+# Acquire sudo upfront and keep it alive
+acquire_sudo() {
+  info "Acquiring sudo privileges..."
+  sudo -v
+  # Keep sudo alive in background
+  while true; do
+    sudo -n true
+    sleep 50
+    kill -0 "$$" 2>/dev/null || exit
+  done &
+  SUDO_KEEPALIVE_PID=$!
+}
+
+cleanup_sudo() {
+  if [ -n "$SUDO_KEEPALIVE_PID" ]; then
+    kill "$SUDO_KEEPALIVE_PID" 2>/dev/null || true
+  fi
+}
+
+trap cleanup_sudo EXIT
+
 # Detect OS and package manager
 detect_os() {
   case "$(uname -s)" in
@@ -454,6 +475,9 @@ main() {
   detect_os
   info "Detected: $OS with $PKG_MGR"
   echo ""
+
+  # Acquire sudo upfront
+  acquire_sudo
 
   # Default: install core stuff
   if [ $# -eq 0 ]; then
