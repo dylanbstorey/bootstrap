@@ -295,20 +295,20 @@ install_python_tools() {
   info "Installing Python CLI tools via uv..."
 
   # Linting, Formatting & Type Checking
-  uv tool install ruff           # Fast linter/formatter (replaces black, isort, flake8)
-  uv tool install ty             # Astral's type checker (replaces mypy)
+  uv tool install --force ruff           # Fast linter/formatter (replaces black, isort, flake8)
+  uv tool install --force ty             # Astral's type checker (replaces mypy)
 
   # Project & Dev Tools
-  uv tool install pre-commit     # Git hooks framework
-  uv tool install angreal        # Project templating/tasks
+  uv tool install --force pre-commit     # Git hooks framework
+  uv tool install --force angreal        # Project templating/tasks
 
   # Testing & Debugging
-  uv tool install pytest         # Testing framework
-  uv tool install ipython        # Better Python REPL
+  uv tool install --force pytest         # Testing framework
+  uv tool install --force ipython        # Better Python REPL
 
   # Packaging & Publishing
-  uv tool install build          # Python package builder
-  uv tool install twine          # PyPI publishing
+  uv tool install --force build          # Python package builder
+  uv tool install --force twine          # PyPI publishing
 
   success "Python CLI tools installed."
   echo ""
