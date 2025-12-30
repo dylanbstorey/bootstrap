@@ -52,6 +52,7 @@ alias unexport='unset'
 alias rm='rm -i'
 
 # cp wrapper: use -i by default, but -f bypasses it
+unalias cp 2>/dev/null || true
 cp() {
   if [[ " $* " == *" -f "* ]] || [[ "$1" == "-f"* ]]; then
     command cp "$@"
@@ -61,6 +62,7 @@ cp() {
 }
 
 # mv wrapper: use -i by default, but -f bypasses it
+unalias mv 2>/dev/null || true
 mv() {
   if [[ " $* " == *" -f "* ]] || [[ "$1" == "-f"* ]]; then
     command mv "$@"

@@ -33,6 +33,8 @@ _uv_python_path() {
 }
 
 # python -> uv-managed Python
+unalias python 2>/dev/null || true
+unalias python3 2>/dev/null || true
 python() {
   if [[ -f "pyproject.toml" ]] || [[ -f "uv.lock" ]]; then
     # In a uv project, use uv run for proper environment
@@ -49,6 +51,8 @@ python3() {
 }
 
 # pip -> uv pip (always use uv for package management)
+unalias pip 2>/dev/null || true
+unalias pip3 2>/dev/null || true
 pip() {
   echo "Using 'uv pip' instead of pip..." >&2
   uv pip "$@"
