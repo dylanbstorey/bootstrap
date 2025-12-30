@@ -72,6 +72,33 @@ pkg_install() {
 }
 
 # ============================================================================
+# Fresh Install (zsh setup + all packages)
+# ============================================================================
+install_fresh() {
+  local script_dir="$(cd "$(dirname "$0")" && pwd)"
+  local repo_dir="$(cd "$script_dir/.." && pwd)"
+
+  if [ -d "$HOME/.oh-my-zsh" ]; then
+    warn "Existing ~/.oh-my-zsh found."
+    printf "Backup and replace? [y/N] "
+    read -r reply
+    if [ "$reply" = "y" ] || [ "$reply" = "Y" ]; then
+      local backup="$HOME/.oh-my-zsh.backup.$(date +%Y%m%d%H%M%S)"
+      info "Backing up to $backup"
+      mv "$HOME/.oh-my-zsh" "$backup"
+    else
+      error "Aborting fresh install. Use individual options instead."
+      return 1
+    fi
+  fi
+
+  info "Running zsh setup from $repo_dir..."
+  RUNZSH=no KEEP_ZSHRC=no sh "$repo_dir/tools/install.sh"
+
+  success "Fresh zsh setup complete. Installing packages..."
+}
+
+# ============================================================================
 # MacPorts
 # ============================================================================
 install_macports() {
@@ -396,7 +423,8 @@ print_usage() {
   echo "Usage: $0 [OPTIONS]"
   echo ""
   echo "Options:"
-  echo "  --all       Install everything"
+  echo "  --fresh     Fresh install (backup existing, setup zsh + all packages)"
+  echo "  --all       Install everything (packages only, no zsh setup)"
   echo "  --port      Install/check MacPorts (macOS only)"
   echo "  --crt       Install CRT terminal"
   echo "  --metis     Install Metis (work management)"
@@ -424,6 +452,19 @@ main() {
 
   for arg in "$@"; do
     case "$arg" in
+      --fresh)
+        install_fresh
+        install_macports || true
+        install_cli_tools
+        install_rust
+        install_cargo_tools
+        install_python
+        install_python_tools
+        install_node
+        install_crt
+        install_metis
+        install_claude || true
+        ;;
       --all)
         install_macports || true
         install_cli_tools
